@@ -1,16 +1,15 @@
 package com.formationandroid.fragments
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.constraintlayout.widget.Constraints.TAG
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.formationandroid.fragments.MemosAdapter.MemoViewHolder
 import com.killianrvt.memoapplication.MemoDTO
-import java.util.*
+import java.util.Collections.swap
+
 
 class MemosAdapter(
     mainActivity: MainActivity?,
@@ -73,4 +72,20 @@ class MemosAdapter(
         this.mainActivity = mainActivity
         this.listeMemos = listeMemos as List<MemoDTO>?
     }
+
+    // Appelé à chaque changement de position, pendant un déplacement.
+    fun onItemMove(positionDebut: Int, positionFin: Int): Boolean {
+        swap(listeMemos, positionDebut, positionFin)
+        notifyItemMoved(positionDebut, positionFin)
+        return true
+    }
+
+    // Appelé une fois à la suppression.
+    fun onItemDismiss(position: Int) {
+        if (position > -1) {
+            listeMemos?.toMutableList()?.removeAt(position)
+            notifyItemRemoved(position)
+        }
+    }
+
 }

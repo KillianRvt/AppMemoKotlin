@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.formationandroid.memokotlin.ItemTouchHelperCallback
 import com.killianrvt.memoapplication.MemoDTO
 
 
@@ -32,6 +32,11 @@ class MainActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.liste_memos)
         editTextMemo = findViewById(R.id.saisie_memo)
         frameLayoutConteneurDetail = findViewById(R.id.conteneur_detail)
+
+        val itemTouchHelper =
+            memosAdapter?.let { ItemTouchHelperCallback(it) }?.let { ItemTouchHelper(it) }
+        itemTouchHelper?.attachToRecyclerView(recyclerView)
+
 
         val button1 =
             findViewById<View>(R.id.bouton_valider) as Button
